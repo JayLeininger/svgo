@@ -67,6 +67,7 @@ const convertRgbToHex = ([r, g, b]) => {
  *   currentColor?: boolean | string | RegExp,
  *   names2hex?: boolean,
  *   rgb2hex?: boolean,
+ *   convertCase?: boolean | string,
  *   shorthex?: boolean,
  *   shortname?: boolean,
  * }>}
@@ -76,6 +77,7 @@ exports.fn = (_root, params) => {
     currentColor = false,
     names2hex = true,
     rgb2hex = true,
+	convertCase = false,
     shorthex = true,
     shortname = true,
   } = params;
@@ -124,6 +126,22 @@ exports.fn = (_root, params) => {
                   return Math.max(0, Math.min(n, 255));
                 });
                 val = convertRgbToHex(nums);
+              }
+            }
+			
+			// convert the case of the hex color
+            if (convertCase) {
+              if (typeof convertCase === 'string') {
+                switch (convertCase) {
+                  case 'upper':
+                    val = val.toUpperCase();
+                    break;
+                  case 'lower':
+                    val = val.toLowerCase();
+                    break;
+                  default:
+                    break;
+                }
               }
             }
 
